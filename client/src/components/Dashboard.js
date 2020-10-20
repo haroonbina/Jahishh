@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Rooms from './Rooms';
+import Rooms from './RoomComponents/Rooms';
 
   
 class Dashboard extends Component {

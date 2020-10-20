@@ -37,7 +37,7 @@ import {
       {/* <!-- Sidebar user panel (optional) --> */}
       <div className="user-panel mt-3 pb-3 mb-3 d-flex">
         <div className="image">
-          <img src="/img/manish.jpg" className="img-circle elevation-2" alt="User Image"/>
+          <img src="/img/hb.jpg" className="img-circle elevation-2" alt="User Image"/>
         </div>
         <div className="info">
           <a href="#" className="d-block">Admin</a>
@@ -54,13 +54,11 @@ import {
               <i className="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Add Room
-                <i className="right fas fa-angle-left"></i>
               </p>
             </Link>
             <ul className="nav nav-treeview">
               <li className="nav-item">
                 <Link to="/home" className="nav-link active">
-                  <i className="far fa-circle nav-icon"></i>
                   <p>Log Out</p>
                 </Link>
               </li>

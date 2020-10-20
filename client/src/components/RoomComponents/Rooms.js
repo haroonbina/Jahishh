@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { fetchRoomsAction, deleteRoomAction } from '../store/actions/RoomsActions'
+import { fetchRoomsAction } from '../../store/actions/RoomsActions'
 import RoomsList from './RoomsList';
 
 class Rooms extends Component{
@@ -14,11 +14,11 @@ class Rooms extends Component{
             <div className="container">
                 {
                     this.props.rooms.loading ? (
-                        <div className="alert alert-info text-center">Loading Rooms...</div>
+                        <div className="alert alert-light text-center">Loading Rooms...</div>
                     ) : this.props.rooms.error ? (
                         <div className="alert alert-danger text-center">{this.props.rooms.error}</div>
                     ) : (
-                        <RoomsList rooms={this.props.rooms.allRooms} deleteRoom={this.props.deleteRoom} />
+                        <RoomsList rooms={this.props.rooms.allRooms} />
                     )
                 }        
             </div>
@@ -34,8 +34,7 @@ const mapStateToProps = (state) =>{
 
 const mapDispatchToState = (dispatch) =>{
     return {
-        fetchRooms: () => {dispatch(fetchRoomsAction())},
-        deleteRoom: (id) => {dispatch(deleteRoomAction(id))},      
+        fetchRooms: () => {dispatch(fetchRoomsAction())},  
     }
 }
 

@@ -4,13 +4,19 @@ const initState = {
         allRooms: [],
         error: ''
     },
-    createRoom: {
-        fieldsError: [],
+    createRoomInputErrors: [],
+    createRoomStatus: {
         loading: false,
         success: false,   
         error: ''
     },
-    editRoom: {},
+    roomForEdit: {},
+    updateRoomInputErrors: [],
+    updateRoomStatus: {
+        loading: false,
+        success: false,   
+        error: ''
+    }
 }
 
 const roomsReducer = (state = initState, action) =>{
@@ -41,64 +47,100 @@ const roomsReducer = (state = initState, action) =>{
                     error: action.error
                 }
             }
-        case 'FIELDS_ERROR':
+        case 'CREATE_ROOM_INPUT_ERRORS':
             return {
                 ...state,
-                createRoom: {
-                    ...state.createRoom,
-                    fieldsError: action.errorArray,
-                }
+                createRoomInputErrors: action.errorsArray
             }
-        case 'RESET_ERRORS':
+        case 'RESET_CREATE_ROOM_INPUT_ERRORS':
             return {
                 ...state,
-                createRoom: {
-                    ...state.createRoom,
-                    fieldsError: [],
-                }
+                createRoomInputErrors: []
             }
         case 'CREATE_ROOM_REQUEST':
             return {
                 ...state,
-                createRoom: {
-                    ...state.createRoom,
+                createRoomStatus: {
+                    ...state.createRoomStatus,
                     loading: true
                 }
             }
-            // return {
-            //     ...state,
-            //     rooms: [...state.rooms, action.roomObject]
-            // }
         case 'CREATE_ROOM_SUCCESS':
             return {
                 ...state,
-                rooms: {
-                    ...state.rooms,
-                    allRooms: [...state.rooms.allRooms, action.roomObject]
-                },
-                createRoom: {
-                    fieldsError: [],
+                createRoomStatus: {
                     loading: false,
                     success: true,   
                     error: ''
                 }
             }
-            // return {
-            //     ...state,
-            //     rooms: [...state.rooms, action.roomObject]
-            // }
-        // case 'DELETE_ROOM':
-        //     return {
-        //         ...state,
-        //         // we have created new room and comparing with old rooms id if its matching it can deleted otherwise would be staying in the state level.
-        //         rooms: state.rooms.filter(room =>{
-        //             return room.id != action.id
-        //         })
-        //     }
-        case 'EDIT_ROOM':
+        case 'CREATE_ROOM_FAILURE':
             return {
                 ...state,
-                editRoom: action.data[0],
+                createRoomStatus: {
+                    loading: false,
+                    success: false, 
+                    error: action.error
+                }
+            }
+        case 'RESET_CREATE_ROOM_ALERTS':
+            return {
+                ...state,
+                createRoomStatus: {
+                    loading: false,
+                    success: false,   
+                    error: ''
+                }
+            }
+        case 'ROOM_FOR_EDIT':
+            return {
+                ...state,
+                roomForEdit: action.data[0],
+            }
+        case 'UPDATE_ROOM_INPUT_ERRORS':
+            return {
+                ...state,
+                updateRoomInputErrors: action.errorsArray
+            }
+        case 'RESET_UPDATE_ROOM_INPUT_ERRORS':
+            return {
+                ...state,
+                updateRoomInputErrors: []
+            }
+        case 'UPDATE_ROOM_REQUEST':
+            return {
+                ...state,
+                updateRoomStatus: {
+                    ...state.updateRoomStatus,
+                    loading: true
+                }
+            }
+        case 'UPDATE_ROOM_SUCCESS':
+            return {
+                ...state,
+                updateRoomStatus: {
+                    loading: false,
+                    success: true,   
+                    error: ''
+                }
+            }
+        case 'UPDATE_ROOM_FAILURE':
+            return {
+                ...state,
+                updateRoomStatus: {
+                    loading: false,
+                    success: false, 
+                    error: action.error
+                }
+            }
+        case 'RESET_UPDATE_ROOM_ALERTS':
+            return {
+                ...state,
+                updateRoomStatus: {
+                    loading: false,
+                    success: false, 
+                    error: ''
+                }
             }
         default:
             return state;

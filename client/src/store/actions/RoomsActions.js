@@ -1,5 +1,3 @@
-import roomsReducer from "../reducers/roomReducer";
-
 export const  fetchRoomsAction = () =>{
     return (dispatch) =>{
         dispatch({type: 'FETCH_ROOMS_REQUEST'})
@@ -11,20 +9,22 @@ export const  fetchRoomsAction = () =>{
                     dispatch({type: 'FETCH_ROOMS_SUCCESS', data});
                 })
             } else {
-                dispatch({type: 'FETCH_ROOMS_FAILURE', error: 'error fetching rooms'})
+                dispatch({type: 'FETCH_ROOMS_FAILURE', error: 'Error fetching rooms'})
             }
+        }).catch(error =>{
+            dispatch({type: 'FETCH_ROOMS_FAILURE', error: 'Unable to request data from server'})
         })
     }
 }
 
-export const  fetchRoomAction = (id) =>{
+export const  fetchRoomForUpdateAction = (id) =>{
     return (dispatch) =>{
         fetch(`/rooms/${id}`)
         .then(response => {
             if (response.status === 200) {
                 response.json()
                 .then(data =>{
-                    dispatch({type: 'EDIT_ROOM', data});
+                    dispatch({type: 'ROOM_FOR_EDIT', data});
                 })
             } else {
                 console.log('you need to contact your admin');
@@ -43,22 +43,20 @@ export const  createRoomAction = (roomObject) =>{
             },
             body: JSON.stringify(roomObject)    
         }).then(response => {
-            if (response.status === 200) {  
-                response.json()
-                .then(data =>{
-                    roomObject.id = data.id
-                    dispatch({type: 'CREATE_ROOM_SUCCESS', roomObject})
-                })
+            if (response.status === 200) {             
+                dispatch({type: 'CREATE_ROOM_SUCCESS'})
             } else {
-                console.log('you need to contact your admin');
-
+                dispatch({type: 'CREATE_ROOM_FAILURE', error: 'Error creating room'})
             }
+        }).catch(error =>{
+            dispatch({type: 'CREATE_ROOM_FAILURE', error: 'Cannot send data to server'})
         })
     }
 }
 
 export const  updateRoomAction = (roomObject) =>{
     return (dispatch) =>{
+        dispatch({type: 'UPDATE_ROOM_REQUEST'});
         fetch(`/rooms/update`, {
             method: 'PUT',
             headers: {
@@ -67,29 +65,12 @@ export const  updateRoomAction = (roomObject) =>{
             body: JSON.stringify(roomObject)    
         }).then(response => {
             if (response.status === 200) {  
-                response.json()
-                .then(data =>{
-                    roomObject.id = data.id
-                    dispatch({type: 'CREATE_ROOM', roomObject})
-                })
+                dispatch({type: 'UPDATE_ROOM_SUCCESS'})
             } else {
-                console.log('you need to contact your admin');
-
+                dispatch({type: 'UPDATE_ROOM_FAILURE', error: 'Error updating room'})
             }
-        })
-    }
-}
-
-export const  deleteRoomAction = (id) =>{
-    return (dispatch) =>{
-        fetch(`/rooms/delete/${id}`, {
-            method: 'DELETE'  
-        }).then(response => {
-            if (response.status === 200) {  
-                dispatch({type: 'DELETE_ROOM', id})
-            } else {
-                console.log('you need to contact your admin');
-            }
+        }).catch(error =>{
+            dispatch({type: 'CREATE_ROOM_FAILURE', error: 'Cannot send data to server'})
         })
     }
 }
