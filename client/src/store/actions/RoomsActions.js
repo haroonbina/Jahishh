@@ -16,6 +16,16 @@ export const  fetchRoomsAction = () =>{
         })
     }
 }
+export const setRoomsAction = (rooms => {
+    return (dispatch) => {
+        dispatch({type: 'FETCH_ROOMS_SUCCESS', data: rooms});
+    }
+})
+export const socketAction = (socket) => {
+    return (dispatch) => {
+        dispatch({type: 'CREATE_SOCKET', payload: socket})
+    }
+}
 
 export const  fetchRoomForUpdateAction = (id) =>{
     return (dispatch) =>{
@@ -71,6 +81,22 @@ export const  updateRoomAction = (roomObject) =>{
             }
         }).catch(error =>{
             dispatch({type: 'CREATE_ROOM_FAILURE', error: 'Cannot send data to server'})
+        })
+    }
+}
+
+export const  deleteRoomAction = (id) =>{
+    return (dispatch) =>{
+        dispatch({type: 'DELETE_ROOM_REQUEST'});
+        fetch(`/rooms/delete/${id}`)
+        .then(response => {
+            if (response.status === 200) {             
+                dispatch({type: 'DELETE_ROOM_SUCCESS', id});
+            } else {
+                dispatch({type: 'DELETE_ROOM_FAILURE', error: 'Error deleting room'})
+            }
+        }).catch(error =>{
+            dispatch({type: 'DELETE_ROOM_FAILURE', error: 'Unable to send request'})
         })
     }
 }

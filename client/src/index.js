@@ -4,9 +4,10 @@ import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk';
 import Router from './components/Router'
-import roomReducer from './store/reducers/roomReducer'
+import rootReducer from './store/reducers/rootReducer'
+import './css/index.css';
 
-const store = createStore(roomReducer, applyMiddleware(thunk));
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 
 const App = () => {

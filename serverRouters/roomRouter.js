@@ -1,5 +1,5 @@
 const express = require('express');
-const {createRoom, fetchRooms, fetchRoomForUpdate, updateRoom} = require('../database/mySql');
+const {createRoom, fetchRooms, fetchRoomForUpdate, updateRoom, deleteRoom} = require('../database/mySql');
 
 const router = express.Router();
 
@@ -38,14 +38,24 @@ router.get('/rooms/:id', (req, res) =>{
 
 router.put('/rooms/update', (req, res) =>{
 
-    const {id, roomName, deviceSn, maxPeopleNumber, currentPeopleNumber} = req.body;
+    const {id, roomName, deviceSn, maxPeopleNumber, currentPeopleNumber,  door_sound_alarm} = req.body;
 
-    updateRoom(id, roomName, deviceSn, maxPeopleNumber, currentPeopleNumber)
+    updateRoom(id, roomName, deviceSn, maxPeopleNumber, currentPeopleNumber, door_sound_alarm)
     .then(result =>{
         res.send();
     }).catch(error =>{
         res.status(400).send();
     })
+})
+
+router.get('/rooms/delete/:id', (req, res) =>{
+    
+    deleteRoom(req.params.id)
+    .then(result =>{
+        res.send();
+    }).catch(error =>{
+        res.status(400).send();
+    })    
 })
 
 module.exports = router;

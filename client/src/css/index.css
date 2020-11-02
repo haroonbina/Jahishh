@@ -1,0 +1,39 @@
+:root{
+    --white: #FFF;
+    --black: #000;
+    --primaryColor: #FDF6ED;
+    --secondaryColor: #8C0353;
+    --hoverColor: #64023B;
+    --gray: #D3D3D3;
+    --lightGray: #76766B;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+.cus-h1{
+    font-size: 50px;
+    font-weight: 900;
+}
+
+.py-6{
+    padding-top: 110px;
+    padding-bottom: 110px;
+}
+
+li{
+    list-style: none;
+
+}
+
+a{
+    text-decoration: none;
+}
+
+a:hover{
+    text-decoration: none;
+}

@@ -1,3 +1,4 @@
+
 const initState = {
     rooms: {
         loading: false,
@@ -16,7 +17,13 @@ const initState = {
         loading: false,
         success: false,   
         error: ''
-    }
+    },
+    deleteRoomStatus: {
+        loading: false,
+        success: false,   
+        error: ''
+    },
+    socket: null
 }
 
 const roomsReducer = (state = initState, action) =>{
@@ -28,6 +35,11 @@ const roomsReducer = (state = initState, action) =>{
                     ...state.rooms,
                     loading: true
                 }
+            }
+        case 'CREATE_SOCKET':
+            return {
+                ...state,
+                socket: action.payload
             }
         case 'FETCH_ROOMS_SUCCESS':
             return {
@@ -139,6 +151,44 @@ const roomsReducer = (state = initState, action) =>{
                 updateRoomStatus: {
                     loading: false,
                     success: false, 
+                    error: ''
+                }
+            }
+        case 'DELETE_ROOM_REQUEST':
+            return {
+                ...state,
+                deleteRoomStatus: {
+                    loading: true,
+                }
+            }
+        case 'DELETE_ROOM_SUCCESS':
+            return {
+                ...state,
+                rooms: {
+                    ...state.rooms,
+                    allRooms: state.rooms.allRooms.filter(room => room.id !== parseInt(action.id))
+                },
+                deleteRoomStatus: {
+                    loading: false,
+                    success: true,   
+                    error: ''
+                }
+            }
+        case 'DELETE_ROOM_FAILURE':
+            return {
+                ...state,
+                deleteRoomStatus: {
+                    loading: false,
+                    success: false,   
+                    error: action.error
+                }
+            }
+        case 'RESET_DELETE_ROOM_TOAST':
+            return {
+                ...state,
+                deleteRoomStatus: {
+                    loading: false,
+                    success: false,   
                     error: ''
                 }
             }
